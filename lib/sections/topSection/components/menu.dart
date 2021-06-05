@@ -25,14 +25,12 @@ class _MenuState extends State<Menu> {
     "Feedback",
     "Contact"
   ];
-  List<Widget> sortWidget=[
-    TopSection(),
-    AboutSection(),
-    ServiceSection(),
-    RecentWorkSection(),
-    FeedbackSection(),
-    ContactSection(),];
   ScrollController _scrollController = new ScrollController();
+  var aboutKey = GlobalKey();
+  var serviceKey = GlobalKey();
+  var recentKey = GlobalKey();
+  var feedKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     double wid=MediaQuery.of(context).size.width;
@@ -58,7 +56,22 @@ class _MenuState extends State<Menu> {
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Column(
-                    children: sortWidget
+                    children: [
+                      TopSection(),
+                      AboutSection(
+                        key: aboutKey,
+                      ),
+                      ServiceSection(
+                        key: serviceKey,
+                      ),
+                      RecentWorkSection(
+                        key: recentKey,
+                      ),
+                      FeedbackSection(
+                        key: feedKey,
+                      ),
+                      ContactSection(),
+                    ]
                   ),
                 ),
               ),
@@ -137,7 +150,6 @@ class _MenuState extends State<Menu> {
 
   void insertItem(int index) {
     setState(() {
-      double wid=MediaQuery.of(context).size.width;
       selectedIndex = index;
           if (index == 0) {
             _scrollController.animateTo(
@@ -153,29 +165,76 @@ class _MenuState extends State<Menu> {
             );
           } else if(index == 2) {
             _scrollController.animateTo(
-              1000,
+              500 + aboutKey.currentContext.size.height,
               curve: Curves.easeOut,
               duration: const Duration(milliseconds: 300),
             );
           } else if(index == 3) {
             _scrollController.animateTo(
-              wid < 1150 ? 1790 : 1830,
+              500 + aboutKey.currentContext.size.height
+                  + serviceKey.currentContext.size.height,
               curve: Curves.easeOut,
               duration: const Duration(milliseconds: 300),
             );
           } else if(index == 4) {
             _scrollController.animateTo(
-              wid < 1150 ? 3300 : 2700,
+              500 + aboutKey.currentContext.size.height
+                  + serviceKey.currentContext.size.height
+                  + recentKey.currentContext.size.height,
               curve: Curves.easeOut,
               duration: const Duration(milliseconds: 300),
             );
-          } else if(index == 5) {
+          } else {
             _scrollController.animateTo(
-              wid < 1150 ? 3900 : 3340,
+              500 + aboutKey.currentContext.size.height
+                  + serviceKey.currentContext.size.height
+                  + recentKey.currentContext.size.height
+                  + feedKey.currentContext.size.height,
               curve: Curves.easeOut,
               duration: const Duration(milliseconds: 300),
             );
           }
         });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(() {
+      setState(() {
+        double set=_scrollController.offset;
+        if ( set < 300) {
+          selectedIndex = 0 ;
+          hoverIndex = 0;
+        } else if ( set >= 300 && set < 300 + aboutKey.currentContext.size.height) {
+          selectedIndex = 1 ;
+          hoverIndex = 1;
+        } else if ( set >= 300 + aboutKey.currentContext.size.height
+            && set < 300 + aboutKey.currentContext.size.height
+                + serviceKey.currentContext.size.height) {
+          selectedIndex = 2 ;
+          hoverIndex = 2;
+        } else if ( set >= 300 + aboutKey.currentContext.size.height
+            + serviceKey.currentContext.size.height
+            && set < 300 + aboutKey.currentContext.size.height
+                + serviceKey.currentContext.size.height
+                + recentKey.currentContext.size.height) {
+          selectedIndex = 3 ;
+          hoverIndex = 3;
+        } else if ( set >= 300 + aboutKey.currentContext.size.height
+            + serviceKey.currentContext.size.height
+            + recentKey.currentContext.size.height
+            && set < 300 + aboutKey.currentContext.size.height
+                + serviceKey.currentContext.size.height
+                + recentKey.currentContext.size.height
+                + feedKey.currentContext.size.height) {
+          selectedIndex = 4 ;
+          hoverIndex = 4;
+        } else {
+          selectedIndex = 5 ;
+          hoverIndex = 5;
+        }
+      });
+    });
   }
 }

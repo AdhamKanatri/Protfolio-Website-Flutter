@@ -7,6 +7,9 @@ import 'package:web_app/models/RecentWork.dart';
 import 'components/recent_work_card.dart';
 
 class RecentWorkSection extends StatelessWidget {
+  const RecentWorkSection({
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
