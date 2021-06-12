@@ -23,14 +23,19 @@ class ServiceSection extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width*0.95,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  services.length, (index) => SizedBox(
-                  width: MediaQuery.of(context).size.width*0.20,
-                  child: ServiceCard(index: index))),
+            child: Center(
+              child: Wrap(
+                spacing: 20,
+                children: List.generate(
+                  services.length,
+                      (index) => Container(
+                      constraints: BoxConstraints(maxHeight: 400, minHeight: 100,
+                          maxWidth:250, minWidth: 175),
+                      child: ServiceCard(index: index)),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

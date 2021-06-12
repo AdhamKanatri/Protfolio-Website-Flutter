@@ -30,7 +30,7 @@ class _ServiceCardState extends State<ServiceCard> {
       hoverColor: Colors.transparent,
       child: AnimatedContainer(
         duration: duration,
-        margin: EdgeInsets.symmetric(vertical: kDefaultPadding * 2),
+        margin: EdgeInsets.symmetric(vertical: kDefaultPadding),
         height: 300,
         width: MediaQuery.of(context).size.width*0.20,
         decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class _ServiceCardState extends State<ServiceCard> {
               padding: EdgeInsets.only(left: 8.0),
               child: Text(
                 services[widget.index].title,
-                style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.035,),
+                style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.034,),
               ),
             ),
           ],
