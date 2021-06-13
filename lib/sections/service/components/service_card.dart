@@ -20,6 +20,7 @@ class _ServiceCardState extends State<ServiceCard> {
   Duration duration = Duration(milliseconds: 200);
   @override
   Widget build(BuildContext context) {
+    double wid = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {},
       onHover: (value) {
@@ -32,7 +33,7 @@ class _ServiceCardState extends State<ServiceCard> {
         duration: duration,
         margin: EdgeInsets.symmetric(vertical: kDefaultPadding),
         height: 300,
-        width: MediaQuery.of(context).size.width*0.20,
+        width: wid*0.20,
         decoration: BoxDecoration(
           color: services[widget.index].color,
           borderRadius: BorderRadius.circular(10),
@@ -68,7 +69,7 @@ class _ServiceCardState extends State<ServiceCard> {
               padding: EdgeInsets.only(left: 8.0),
               child: Text(
                 services[widget.index].title,
-                style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.034,),
+                style: TextStyle(fontSize: wid <= 1360? wid*0.034 : 46.24,),
               ),
             ),
           ],

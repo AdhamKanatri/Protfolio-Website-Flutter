@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_app/components/default_button.dart';
 import 'package:web_app/components/section_title.dart';
 import 'package:web_app/constants.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'components/socal_card.dart';
 
 class ContactSection extends StatelessWidget {
@@ -59,24 +60,24 @@ class ContactBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SocalCard(
-                  color: Color(0xFFD9FFFC),
-                  iconSrc: "assets/images/skype.png",
-                  name: 'TheFlutterWay',
-                  press: () {},
+                  color: Colors.grey[100],
+                  iconSrc: "assets/images/github-logo.png",
+                  name: 'AdhamKanatri',
+                  press: () => launch('https://github.com/AdhamKanatri'),
                 ),
                 SizedBox(width: MediaQuery.of(context).size.height*0.05,),
                 SocalCard(
                   color: Color(0xFFE4FFC7),
                   iconSrc: "assets/images/whatsapp.png",
-                  name: 'TheFlutterWay',
-                  press: () {},
+                  name: '+966 53 858 5448',
+                  press: () => launch('https://api.whatsapp.com/send?phone=966538585448'),
                 ),
                 SizedBox(width: MediaQuery.of(context).size.height*0.05,),
                 SocalCard(
                   color: Color(0xFFE8F0F9),
                   iconSrc: "assets/images/messanger.png",
-                  name: 'TheFlutterWay',
-                  press: () {},
+                  name: 'أدهم جمال',
+                  press: () => launch('https://www.facebook.com/abmjahed.kanatre'),
                 ),
               ],
             ),
@@ -96,15 +97,17 @@ class ContactForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double wid = MediaQuery.of(context).size.width;
+    String body, name,type,budget,description;
     return Form(
       child: Wrap(
         spacing: kDefaultPadding * 2.5,
         runSpacing: kDefaultPadding * 1.5,
         children: [
           SizedBox(
-            width: 470,
+            width: wid <= 500 ? 470 : wid*0.36,
             child: TextFormField(
-              onChanged: (value) {},
+              onChanged: (value) => name = value,
               decoration: InputDecoration(
                 labelText: "Your Name",
                 hintText: "Enter Your Name",
@@ -112,40 +115,31 @@ class ContactForm extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 470,
+            width: wid <= 500 ? 470 : wid*0.36,
             child: TextFormField(
-              onChanged: (value) {},
-              decoration: InputDecoration(
-                labelText: "Email Address",
-                hintText: "Enter your email address",
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 470,
-            child: TextFormField(
-              onChanged: (value) {},
-              decoration: InputDecoration(
-                labelText: "Project Type",
-                hintText: "Select Project Type",
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 470,
-            child: TextFormField(
-              onChanged: (value) {},
+              onChanged: (value) => budget = value,
               decoration: InputDecoration(
                 labelText: "Project Budget",
                 hintText: "Select Project Budget",
               ),
             ),
           ),
+          Center(
+            child: SizedBox(
+              width: wid <= 500 ? 470 : wid*0.5,
+              child: TextFormField(
+                onChanged: (value) => type = value,
+                decoration: InputDecoration(
+                  labelText: "Project Type",
+                  hintText: "Select Project Type",
+                ),
+              ),
+            ),
+          ),
           SizedBox(
-            // height: 300,
-            // TextField by default cover the height, i tryed to fix this problem but i cant
+            width: wid <= 500 ? 470 : wid*0.769,
             child: TextFormField(
-              onChanged: (value) {},
+              onChanged: (value) => description = value,
               decoration: InputDecoration(
                 labelText: "Description",
                 hintText: "Write some description",
@@ -156,9 +150,16 @@ class ContactForm extends StatelessWidget {
           Center(
             child: FittedBox(
               child: DefaultButton(
-                imageSrc: "assets/images/contact_icon.png",
-                text: "Contact Me!",
-                press: () {},
+                  imageSrc: "assets/images/contact_icon.png",
+                  text: "Contact Me!",
+                  press: () {
+                    if (name.isNotEmpty && type.isNotEmpty && budget.isNotEmpty && description.isNotEmpty) {
+                      body = 'My name is $name \nProject type: $type \nProject budget: $budget \nDescription: $description';
+                      launch('mailto:adham890@gmail.com?subject=${Uri.encodeFull(
+                          'Project request')}&body=${Uri
+                          .encodeFull('$body')}');
+                    }
+                  },
               ),
             ),
           )
