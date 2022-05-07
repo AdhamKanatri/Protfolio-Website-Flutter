@@ -12,13 +12,14 @@ class AboutSectionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double wid = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Text(
         text,
         style: TextStyle(
             fontWeight: FontWeight.w200, color: kTextColor, height: 2,
-            fontSize: MediaQuery.of(context).size.width*0.02),
+            fontSize: wid <= 800 ? 18 : wid*0.02),
       ),
     );
   }

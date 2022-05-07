@@ -8,8 +8,11 @@ class PersonPic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double wid = 400;
-    if (MediaQuery.of(context).size.width < 600) {
+    double width = MediaQuery.of(context).size.width;
+    if (width <= 600 && width >= 500) {
       wid = 300;
+    }else if (width < 500) {
+      wid = 200;
     }else{
       wid = 400;
     }

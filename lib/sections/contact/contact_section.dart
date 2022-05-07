@@ -5,6 +5,7 @@ import 'package:web_app/components/section_title.dart';
 import 'package:web_app/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'components/socal_card.dart';
+import 'package:flash/flash.dart';
 
 class ContactSection extends StatelessWidget {
   @override
@@ -147,19 +148,48 @@ class ContactForm extends StatelessWidget {
             ),
           ),
           SizedBox(height: kDefaultPadding * 2),
-          Center(
-            child: FittedBox(
-              child: DefaultButton(
-                  imageSrc: "assets/images/contact_icon.png",
-                  text: "Contact Me!",
-                  press: () {
-                    if (name.isNotEmpty && type.isNotEmpty && budget.isNotEmpty && description.isNotEmpty) {
-                      body = 'My name is $name \nProject type: $type \nProject budget: $budget \nDescription: $description';
-                      launch('mailto:adham890@gmail.com?subject=${Uri.encodeFull(
-                          'Project request')}&body=${Uri
-                          .encodeFull('$body')}');
-                    }
-                  },
+          Builder(
+            builder: (context) => Center(
+              child: FittedBox(
+                child: DefaultButton(
+                    imageSrc: "assets/images/contact_icon.png",
+                    text: "Send email to me",
+                    press: () {
+                      showFlash(
+                          context: context,
+                          duration: Duration(seconds: 3),
+                          builder: (context, controller){
+                        return Flash.dialog(
+                          controller: controller,
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          backgroundGradient: LinearGradient(
+                            colors: [Colors.indigo, Colors.deepPurple],
+                          ),
+                          // Alignment is only available for the "dialog" named constructor
+                          alignment: Alignment.bottomCenter,
+                          margin: const EdgeInsets.only(bottom: 48),
+                          // Child can be any widget you like, this one just displays a padded text
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Pleas, fill all forms",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                      if (name.isNotEmpty && type.isNotEmpty && budget.isNotEmpty && description.isNotEmpty) {
+                        body = 'My name is $name \nProject type: $type \nProject budget: $budget \nDescription: $description';
+                        launch('mailto:adham890@gmail.com?subject=${Uri.encodeFull(
+                            'Project request')}&body=${Uri
+                            .encodeFull('$body')}');
+                      }
+
+                    },
+                ),
               ),
             ),
           )

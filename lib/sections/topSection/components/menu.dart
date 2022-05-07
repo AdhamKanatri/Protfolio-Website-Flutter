@@ -35,7 +35,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     double wid=MediaQuery.of(context).size.width;
     double high=MediaQuery.of(context).size.height;
-    if(wid < 350 && high < 300 || wid < 450 ){
+    if( wid < 350 && high < 300 || wid < 330 ){
       return Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -46,7 +46,9 @@ class _MenuState extends State<Menu> {
           ),
         ),
       );
-    }else{
+    } else if( high <= 85 ){
+      return Text("Height is not enough to display App");
+    } else{
       return Scaffold(
         body: SafeArea(
           child: Column(
